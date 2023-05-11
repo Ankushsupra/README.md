@@ -1,0 +1,67 @@
+% Load the video
+video = VideoReader('ExampleB.mp4');
+n=video.NumFrames
+% Get the video frame size
+frame_size = [video.Height, video.Width];
+k=mod(n,2);
+if k==0
+    j=n/2;
+        frame = readFrame(video);
+        imshow(frame);
+        title('Select person in the frame');
+        person_bounds = getrect;
+        person_height = 1.65; % meters
+         
+        focal_length = (frame_size(2)/2) * 1/(tan(deg2rad(71.91/2)));
+        distance = person_height * focal_length / person_bounds(4);
+        fprintf('The distance to the person in first frame is %.2f meters\n', distance);
+
+        %for mid-frame
+        frame_2 = read(video,j);
+        imshow(frame_2);
+        title('Select person in the mid frame');
+        person_bounds_2 = getrect;
+        distance_2 = person_height * focal_length / person_bounds_2(4);
+        fprintf('The distance to the person in mid-frame is %.2f meters\n', distance_2);
+
+        %for last-frame
+        frame_3 = read(video,n);
+        imshow(frame_3);
+        title('Select person in the last frame');
+        person_bounds_3 = getrect;
+        distance_3 = person_height * focal_length / person_bounds_3(4);
+        fprintf('The distance to the person in last-frame is %.2f meters\n', distance_3);
+else
+   j=((n+1)/2);
+        frame = readFrame(video);
+        imshow(frame);
+        title('Select person in the frame');
+        person_bounds = getrect;
+        person_height = 1.65; % meters
+        focal_length = (frame_size(2)/2) * (1/tan(deg2rad(71.91/2)));
+        distance = person_height * focal_length / person_bounds(4);
+        fprintf('The distance to the person in first frame is %.2f meters\n', distance);
+
+        %for mid-frame
+        frame_2 = read(video,j);
+        imshow(frame_2);
+        title('Select person in the mid frame');
+        person_bounds_2 = getrect;
+        distance_2 = person_height * focal_length / person_bounds_2(4);
+        fprintf('The distance to the person in mid-frame is %.2f meters\n', distance_2);
+
+        %for last-frame
+        frame_3 = read(video,n);
+        imshow(frame_3);
+        title('Select person in the last frame');
+        person_bounds_3 = getrect;
+        distance_3 = person_height * focal_length / person_bounds_3(4);
+        fprintf('The distance to the person in last-frame is %.2f meters\n', distance_3);
+end
+fps=30;
+%depending on the distance considered, this value will change
+d=4; %meters
+%to get the time taken we divide number of frames by fps
+t=n/fps
+%we have distance and time, speed can be calculated 
+v=d/t
